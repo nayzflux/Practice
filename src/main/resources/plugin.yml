@@ -1,0 +1,10 @@
+name: Practice
+author: NayZ
+version: 1.0-SNAPSHOT
+api-version: 1.20
+main: fr.nayz.practice.Practice
+commands:
+  duel:
+    description: Provoquer un joueur en duel
+  bugs:
+    description: Signaler un bug

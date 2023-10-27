@@ -1,0 +1,6 @@
+database:
+  host: example.com
+  port: 3306
+  db: DatabaseName
+  user: Username
+  password: Secret
