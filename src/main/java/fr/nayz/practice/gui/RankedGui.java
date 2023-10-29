@@ -1,8 +1,8 @@
 package fr.nayz.practice.gui;
 
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.api.items.ItemBuilder;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.managers.QueueManager;
-import fr.nayz.practice.utils.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,7 +27,7 @@ public class RankedGui implements Listener {
             inv.setItem(i, new ItemStack(Material.GLASS_PANE));
         }
 
-        for (Kit kit : Kit.values()) {
+        for (PracticeKit kit : PracticeKit.values()) {
             if (kit.isRanked()) {
                 ItemStack item = new ItemBuilder(kit.getMaterial()).setName("§8» §e§l" + kit.getName() + " §7(Ranked)").toItem();
                 inv.setItem(kit.getSlot(), item);
@@ -49,7 +49,7 @@ public class RankedGui implements Listener {
 
         if (item == null) return;
 
-        Optional<Kit> kit = Kit.find(item.getType());
+        Optional<PracticeKit> kit = PracticeKit.find(item.getType());
 
         if (kit.isEmpty()) return;
 

@@ -1,7 +1,7 @@
 package fr.nayz.practice.managers;
 
 import fr.nayz.practice.arenas.Arena;
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.utils.GameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -12,8 +12,8 @@ import java.util.*;
 public class QueueManager {
     private static QueueManager INSTANCE = new QueueManager();
 
-    private Map<Kit, List<Player>> rankedQueue;
-    private Map<Kit, List<Player>> unrankedQueue;
+    private Map<PracticeKit, List<Player>> rankedQueue;
+    private Map<PracticeKit, List<Player>> unrankedQueue;
 
     public QueueManager() {
         INSTANCE = this;
@@ -21,7 +21,7 @@ public class QueueManager {
         rankedQueue = new HashMap<>();
         unrankedQueue = new HashMap<>();
 
-        for (Kit kit : Kit.values()) {
+        for (PracticeKit kit : PracticeKit.values()) {
             if (kit.isRanked()) {
                 rankedQueue.put(kit, new ArrayList<>());
             }
@@ -30,7 +30,7 @@ public class QueueManager {
         }
     }
 
-    public void matchmaking(Kit kit, boolean ranked) {
+    public void matchmaking(PracticeKit kit, boolean ranked) {
         if (ranked) {
             Bukkit.getLogger().info("Matchamaking (ranked)");
 
@@ -120,7 +120,7 @@ public class QueueManager {
 //        return getNearEloPlayer(player, kit, (tolerance + 300));
 //    }
 
-    public void join(Player player, Kit kit, boolean ranked) {
+    public void join(Player player, PracticeKit kit, boolean ranked) {
         if (isInQueue(player)) {
             GameUtils.playSound(player, Sound.ENTITY_VILLAGER_NO, 1F, 1F);
             GameUtils.sendSectionMessage(player, "§7» §cVous êtes déjà dans une file d'attente");
@@ -149,14 +149,14 @@ public class QueueManager {
         GameUtils.reset(player);
         GameUtils.giveLobbyItem(player);
 
-        for (Map.Entry<Kit, List<Player>> entry : unrankedQueue.entrySet()) {
+        for (Map.Entry<PracticeKit, List<Player>> entry : unrankedQueue.entrySet()) {
             if (entry.getValue().contains(player)) {
                 unrankedQueue.get(entry.getKey()).remove(player);
                 return;
             }
         }
 
-        for (Map.Entry<Kit, List<Player>> entry : rankedQueue.entrySet()) {
+        for (Map.Entry<PracticeKit, List<Player>> entry : rankedQueue.entrySet()) {
             if (entry.getValue().contains(player)) {
                 rankedQueue.get(entry.getKey()).remove(player);
                 return;
@@ -165,13 +165,13 @@ public class QueueManager {
     }
 
     public boolean isInQueue(Player player) {
-        for (Map.Entry<Kit, List<Player>> entry : unrankedQueue.entrySet()) {
+        for (Map.Entry<PracticeKit, List<Player>> entry : unrankedQueue.entrySet()) {
             if (entry.getValue().contains(player)) {
                 return true;
             }
         }
 
-        for (Map.Entry<Kit, List<Player>> entry : rankedQueue.entrySet()) {
+        for (Map.Entry<PracticeKit, List<Player>> entry : rankedQueue.entrySet()) {
             if (entry.getValue().contains(player)) {
                 rankedQueue.get(entry.getKey()).remove(player);
                 return true;
@@ -185,11 +185,11 @@ public class QueueManager {
         return INSTANCE;
     }
 
-    public Map<Kit, List<Player>> getUnrankedQueue() {
+    public Map<PracticeKit, List<Player>> getUnrankedQueue() {
         return unrankedQueue;
     }
 
-    public Map<Kit, List<Player>> getRankedQueue() {
+    public Map<PracticeKit, List<Player>> getRankedQueue() {
         return rankedQueue;
     }
 

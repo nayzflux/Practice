@@ -1,8 +1,9 @@
 package fr.nayz.practice.arenas;
 
+import fr.nayz.api.GameAPI;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.Practice;
 import fr.nayz.commons.accounts.PracticeData;
-import fr.nayz.practice.kits.Kit;
 import fr.nayz.practice.scoreboards.GameBoard;
 import fr.nayz.practice.scoreboards.LobbyBoard;
 import fr.nayz.practice.utils.GameUtils;
@@ -24,12 +25,12 @@ public class Arena extends BukkitRunnable {
     private List<Block> placedBlocks;
     private ArenaStatus status;
     private int timer = 5;
-    private Kit kit;
-    private List<Kit> kits;
+    private PracticeKit kit;
+    private List<PracticeKit> kits;
     private boolean ranked;
     private List<Entity> drops;
 
-    public Arena(Location spawn1, Location spawn2, List<Kit> kits) {
+    public Arena(Location spawn1, Location spawn2, List<PracticeKit> kits) {
         this.spawn1 = spawn1;
         this.spawn2 = spawn2;
         this.kits = kits;
@@ -40,11 +41,11 @@ public class Arena extends BukkitRunnable {
         this.runTaskTimer(Practice.getInstance(), 0L, 20L);
     }
 
-    public List<Kit> getKits() {
+    public List<PracticeKit> getKits() {
         return kits;
     }
 
-    public Kit getKit() {
+    public PracticeKit getKit() {
         return kit;
     }
 
@@ -106,7 +107,7 @@ public class Arena extends BukkitRunnable {
         this.player2 = player2;
     }
 
-    public void setKit(Kit kit) {
+    public void setKit(PracticeKit kit) {
         this.kit = kit;
     }
 
@@ -133,8 +134,8 @@ public class Arena extends BukkitRunnable {
         }
 
         // Statistics
-        PracticeData victimStats = Practice.getInstance().findPlayerStatistics(victim);
-        PracticeData killerStats = Practice.getInstance().findPlayerStatistics(killer);
+        PracticeData victimStats = GameAPI.getInstance().getPracticeDataManager().getData(victim);
+        PracticeData killerStats = GameAPI.getInstance().getPracticeDataManager().getData(killer);
 
         victimStats.addDeath(1);
         victimStats.addLose(1);
@@ -232,7 +233,7 @@ public class Arena extends BukkitRunnable {
             timer++;
 
             // Sumo
-            if (kit == Kit.SUMO) {
+            if (kit == PracticeKit.SUMO) {
                 if (player1.getLocation().getBlockY() <= (spawn1.getBlockY() - 1)) {
                     kill(player1, player2);
                 }

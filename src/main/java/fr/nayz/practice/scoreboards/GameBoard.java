@@ -2,7 +2,6 @@ package fr.nayz.practice.scoreboards;
 
 import fr.nayz.practice.arenas.Arena;
 import fr.nayz.practice.managers.ConfigManager;
-import fr.nayz.practice.managers.QueueManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

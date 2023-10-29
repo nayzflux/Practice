@@ -2,7 +2,7 @@ package fr.nayz.practice.managers;
 
 import fr.nayz.practice.arenas.Arena;
 import fr.nayz.practice.arenas.ArenaStatus;
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.commons.pratices.PracticeKit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class ConfigManager {
 
         arenas = new ArrayList<>();
 
-        List<Kit> defaultKits = List.of(Kit.BUILD_UHC, Kit.ARCHER, Kit.SOUP, Kit.NO_DEBUFF, Kit.CLASSIC);
+        List<PracticeKit> defaultKits = List.of(PracticeKit.BUILD_UHC, PracticeKit.ARCHER, PracticeKit.SOUP, PracticeKit.NO_DEBUFF, PracticeKit.CLASSIC);
 
         arenas.add(new Arena(
                 new Location(Bukkit.getWorld("world"), 508.5, 9, 49.5),
@@ -92,7 +92,7 @@ public class ConfigManager {
         arenas.add(new Arena(
                 new Location(Bukkit.getWorld("world"), 168.5, 28, 629.5, -90, 0),
                 new Location(Bukkit.getWorld("world"), 176.5, 28, 629.5, 90, 0),
-                List.of(Kit.SUMO)
+                List.of(PracticeKit.SUMO)
         ));
     }
 
@@ -112,7 +112,7 @@ public class ConfigManager {
         return arenas.stream().filter(a -> a.getPlayer1() == player|| a.getPlayer2() == player).findFirst();
     }
 
-    public Optional<Arena> getAvailableArena(Kit kit) {
+    public Optional<Arena> getAvailableArena(PracticeKit kit) {
         return arenas.stream().filter(a -> a.getStatus() == ArenaStatus.AVAILABLE && a.getKits().contains(kit)).findFirst();
     }
 

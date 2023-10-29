@@ -6,5 +6,5 @@ main: fr.nayz.practice.Practice
 commands:
   duel:
     description: Provoquer un joueur en duel
-  bugs:
-    description: Signaler un bug
+depend:
+  - GameAPI

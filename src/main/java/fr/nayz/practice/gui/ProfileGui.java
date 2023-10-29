@@ -1,9 +1,9 @@
 package fr.nayz.practice.gui;
 
-import fr.nayz.practice.Practice;
+import fr.nayz.api.GameAPI;
+import fr.nayz.api.items.ItemBuilder;
 import fr.nayz.commons.accounts.PracticeData;
-import fr.nayz.practice.kits.Kit;
-import fr.nayz.practice.utils.ItemBuilder;
+import fr.nayz.commons.pratices.PracticeKit;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,13 +21,13 @@ public class ProfileGui implements Listener {
 
     public static void open(Player player) {
         Inventory inv = Bukkit.createInventory(null, SIZE, Component.text(NAME));
-        PracticeData data = Practice.getInstance().findPlayerStatistics(player);
+        PracticeData data = GameAPI.getInstance().getPracticeDataManager().getData(player);
 
         for (int i = 0; i < SIZE; i++) {
             inv.setItem(i, new ItemStack(Material.GLASS_PANE));
         }
 
-        for (Kit kit : Kit.values()) {
+        for (PracticeKit kit : PracticeKit.values()) {
             if (kit.isRanked()) {
                 ItemStack item = new ItemBuilder(kit.getMaterial()).setName("§8» §e§l" + kit.getName() + " §7(Ranked)").setLore("§f• §7Elo: §b" + data.getElo(kit)).toItem();
                 inv.setItem(kit.getSlot() + 10, item);

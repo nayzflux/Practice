@@ -1,6 +1,7 @@
 package fr.nayz.practice.utils;
 
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.api.items.ItemBuilder;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.managers.ConfigManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -91,7 +92,7 @@ public class GameUtils {
         }
     }
 
-    public static void giveQueueItem(Player player, Kit kit, boolean ranked) {
+    public static void giveQueueItem(Player player, PracticeKit kit, boolean ranked) {
         ItemStack cancel = new ItemBuilder(Material.REDSTONE).setName("§8» §c§lAnnuler §7(Clique-Droit)").toItem();
         ItemStack queue = new ItemBuilder(Material.PAPER).setName("§8» §b§l" + kit.getName() + " §7(" + (ranked ? "Ranked" : "Unranked") + ")").toItem();
 

@@ -1,5 +1,6 @@
 package fr.nayz.practice.listeners;
 
+import fr.nayz.api.GameAPI;
 import fr.nayz.commons.accounts.Account;
 import fr.nayz.commons.ranks.Rank;
 import fr.nayz.practice.Practice;
@@ -10,7 +11,7 @@ import fr.nayz.practice.gui.EditingKitsGui;
 import fr.nayz.practice.gui.ProfileGui;
 import fr.nayz.practice.gui.RankedGui;
 import fr.nayz.practice.gui.UnrankedGui;
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.managers.ConfigManager;
 import fr.nayz.practice.managers.QueueManager;
 import fr.nayz.practice.scoreboards.LobbyBoard;
@@ -30,8 +31,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ public class PlayerListener implements Listener {
 
         LobbyBoard.getInstance().createNewScoreboard(player);
 
-        Account account = Practice.getInstance().findAccount(player).get();
+        Account account = GameAPI.getInstance().getAccountManager().getAccount(player);
         Rank rank = account.getRank();
         String chatPrefix = rank.getChatPrefix();
 
@@ -59,14 +58,6 @@ public class PlayerListener implements Listener {
 
         if (rank.getPower() >= Rank.VIP.getPower()) {
             GameUtils.spawnFirework(player, 1);
-
-//            for (Player online : Bukkit.getOnlinePlayers()) {
-//                Optional<Arena> arena = ConfigManager.getInstance().getPlayerArena(online);
-//
-//                if (arena.isEmpty()) {
-//                    GameUtils.showTitle(online, chatPrefix + player.getName(), "§bA rejoint le serveur !");
-//                }
-//            }
         }
 
         GameUtils.sendSectionMessage(player, "§8» §7Bienvenue sur le §c§lPractice", "§8» §7Le serveur est encore en phase de développement", "§8» §7Merci de signaler les bugs en utilisant la commande /bugs");
@@ -93,10 +84,10 @@ public class PlayerListener implements Listener {
 
         Practice.getInstance().getEditingKits().remove(player);
 
-        PracticeData stats = Practice.getInstance().findPlayerStatistics(player);
+        PracticeData stats = GameAPI.getInstance().getPracticeDataManager().getData(player);
         stats.save();
 
-        Account account = Practice.getInstance().findAccount(player).get();
+        Account account = GameAPI.getInstance().getAccountManager().getAccount(player);
         Rank rank = account.getRank();
         String chatPrefix = rank.getChatPrefix();
 
@@ -119,7 +110,7 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        Kit kit = Practice.getInstance().getEditingKits().get(player);
+        PracticeKit kit = Practice.getInstance().getEditingKits().get(player);
 
         if (kit != null) return;
 
@@ -159,7 +150,7 @@ public class PlayerListener implements Listener {
             Bukkit.getLogger().info(sign.getLine(2));
 
             if (sign.getLine(2).equals("spawn")) {
-                Kit kit = Practice.getInstance().getEditingKits().get(player);
+                PracticeKit kit = Practice.getInstance().getEditingKits().get(player);
 
                 // Save inv
                 if (kit != null) {
@@ -247,7 +238,7 @@ public class PlayerListener implements Listener {
 
         if (item == null) return;
 
-        Kit kit = Practice.getInstance().getEditingKits().get(player);
+        PracticeKit kit = Practice.getInstance().getEditingKits().get(player);
 
         if (kit == null) return;
 

@@ -2,9 +2,8 @@ package fr.nayz.practice.listeners;
 
 import fr.nayz.practice.arenas.Arena;
 import fr.nayz.practice.arenas.ArenaStatus;
-import fr.nayz.practice.kits.Kit;
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.managers.ConfigManager;
-import fr.nayz.practice.managers.QueueManager;
 import fr.nayz.practice.utils.GameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -49,7 +48,7 @@ public class ArenaListener implements Listener {
             }
 
             // Si c'est Sumo alors il n'y a aucun dégat
-            if (arena.get().getKit() == Kit.SUMO) {
+            if (arena.get().getKit() == PracticeKit.SUMO) {
                 event.setDamage(0);
             }
 
@@ -98,7 +97,7 @@ public class ArenaListener implements Listener {
         }
 
         // Si l'arène est Sumo et en demarrage
-        if (arena.get().getStatus() == ArenaStatus.STARTING && arena.get().getKit() == Kit.SUMO) {
+        if (arena.get().getStatus() == ArenaStatus.STARTING && arena.get().getKit() == PracticeKit.SUMO) {
             event.setCancelled(true);
         }
     }

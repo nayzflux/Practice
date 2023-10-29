@@ -1,9 +1,9 @@
 package fr.nayz.practice.commands;
 
+import fr.nayz.commons.pratices.PracticeKit;
 import fr.nayz.practice.Practice;
 import fr.nayz.practice.arenas.Arena;
 import fr.nayz.practice.gui.DuelGui;
-import fr.nayz.practice.kits.Kit;
 import fr.nayz.practice.managers.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -31,7 +31,7 @@ public class DuelCommand implements CommandExecutor {
                 target.sendMessage("§f» §c" + player.getName() + " a accepté votre demande en duel.");
                 player.sendMessage("§8» §aVous avez accepté la demande en duel.");
 
-                Kit kit = Practice.getInstance().getDuelKits().get(target);
+                PracticeKit kit = Practice.getInstance().getDuelKits().get(target);
 
                 Optional<Arena> arena = ConfigManager.getInstance().getAvailableArena(kit);
 

@@ -1,5 +1,6 @@
 package fr.nayz.practice.listeners;
 
+import fr.nayz.api.GameAPI;
 import fr.nayz.commons.accounts.Account;
 import fr.nayz.commons.ranks.Rank;
 import fr.nayz.practice.Practice;
@@ -15,7 +16,7 @@ public class PlayerChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        Account account = Practice.getInstance().findAccount(player).get();
+        Account account = GameAPI.getInstance().getAccountManager().getAccount(player);
 
         Rank rank = account.getRank();
 
